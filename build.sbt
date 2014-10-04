@@ -31,8 +31,8 @@ lazy val root = Project(
 ).enablePlugins(PlayScala).settings(
   baseSettings: _*
 ).settings(
-  libraryDependencies ++= (
-    Nil
+  libraryDependencies ++= Seq(
+    "jp.co.bizreach" %% "play2-handlebars" % "0.1.0"
   )
 )
 
