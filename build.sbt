@@ -27,7 +27,7 @@ val baseSettings = Seq(
 )
 
 lazy val root = Project(
-  "studyplay", file(".")
+  "studyplay2", file(".")
 ).enablePlugins(PlayScala).settings(
   baseSettings: _*
 ).settings(
