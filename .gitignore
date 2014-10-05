@@ -4,3 +4,6 @@ target
 *.jar
 *.swp
 /logs
+
+.idea
+.idea_modules
