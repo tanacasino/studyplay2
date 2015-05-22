@@ -3,7 +3,7 @@ val originalJvmOptions = sys.process.javaVmArguments.filter(
 )
 
 val baseSettings = Seq(
-  scalaVersion := "2.11.4",
+  scalaVersion := "2.11.6",
   scalacOptions ++= (
     "-deprecation" ::
     "-unchecked" ::
