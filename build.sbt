@@ -33,7 +33,9 @@ val appDependencies = Seq(
   "com.h2database"                 % "h2"                                  % "1.4.187",
   "com.typesafe.play"             %% "play-slick"                          % "1.0.0",
   "com.sksamuel.elastic4s"        %% "elastic4s"                           % "1.5.17",
-  "org.scalatest"                 %% "scalatest"                           % "2.1.6"                 % "test"
+  "org.scalatest"                 %% "scalatest"                           % "2.2.1"                 % "test",
+  "org.scalatestplus"             %% "play"                                % "1.4.0-M3"              % "test"
+
 )
 
 lazy val root = Project(
