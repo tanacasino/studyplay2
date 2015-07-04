@@ -1,5 +1,4 @@
 target
-.DS_Store
 *.class
 *.jar
 *.swp
@@ -7,3 +6,6 @@ target
 
 .idea
 .idea_modules
+
+.DS_Store
+

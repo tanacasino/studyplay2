@@ -6,17 +6,16 @@ val appVersion = "1.0.0"
 
 val baseSettings = Seq(
   scalaVersion := "2.11.7",
-  scalacOptions ++= (
-    "-feature" ::
-    "-deprecation" ::
-    "-unchecked" ::
-    "-Xlint" ::
-    "-Ywarn-dead-code" ::
-    "-Ywarn-unused-import" ::
-    "-language:existentials" ::
-    "-language:higherKinds" ::
-    "-language:implicitConversions" ::
-    Nil
+  scalacOptions ++= Seq(
+    "-feature",
+    "-deprecation",
+    "-unchecked",
+    "-Xlint",
+    "-Ywarn-dead-code",
+    "-Ywarn-unused-import",
+    "-language:existentials",
+    "-language:higherKinds",
+    "-language:implicitConversions"
   ),
   javacOptions in compile ++= Seq(
    "-encoding", "UTF-8",
