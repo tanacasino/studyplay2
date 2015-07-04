@@ -5,7 +5,6 @@ import com.sksamuel.elastic4s.ElasticDsl._
 
 import org.elasticsearch.common.settings.ImmutableSettings.Builder
 import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner
-import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner.newConfigs
 
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
@@ -15,17 +14,16 @@ class SampleSpec extends PlaySpec with BeforeAndAfterAll {
 
   lazy val runner = new ElasticsearchClusterRunner
 
+  val numOfNode = 1
+
 
   override def beforeAll(): Unit = {
-    println(s"${this.getClass}: beforeAll")
-    runner.onBuild(new ElasticsearchClusterRunner.Builder() {
-      override def build(number: Int, builder: Builder): Unit = {
-        builder.put("http.cors.enabled", true)
-      }
-    }).build(
-        newConfigs()
-          .clusterName("es-cl-run-" + System.currentTimeMillis())
-          .ramIndexStore().numOfNode(1))
+    val config = ElasticsearchClusterRunner
+                  .newConfigs()
+                  .clusterName("es-cl-run-" + System.currentTimeMillis())
+                  .ramIndexStore()
+                  .numOfNode(numOfNode)
+    runner.build(config)
     runner.ensureYellow()
   }
 
@@ -48,7 +46,7 @@ class SampleSpec extends PlaySpec with BeforeAndAfterAll {
             "country" -> "United Kingdom",
             "continent" -> "Europe",
             "status" -> "Awesome"
-            )
+          )
         }
       }
       val actual = f.await
@@ -63,7 +61,7 @@ class SampleSpec extends PlaySpec with BeforeAndAfterAll {
   private def assertClusterStatus()(implicit client: ElasticClient) = {
     val f = client.execute(clusterHealth)
     val actual = f.await
-    actual.getNumberOfNodes mustBe 1
+    actual.getNumberOfNodes mustBe numOfNode
   }
 
 }
