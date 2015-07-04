@@ -18,7 +18,7 @@ val baseSettings = Seq(
     "-language:implicitConversions"
   ),
   javacOptions in compile ++= Seq(
-   "-encoding", "UTF-8",
+    "-encoding", "UTF-8",
     "-source", "1.8",
     "-target", "1.8"
   ),
@@ -62,5 +62,12 @@ lazy val root = Project(
 ).settings(
   promptTheme := customPromptTheme,
   shellPrompt := (implicit state => promptTheme.value.render(state))
+).enablePlugins(RpmPlugin).settings(
+  maintainer := "Tomofumi Tanaka <tanacasino@gmail.com>",
+  packageSummary := "My play application summary.",
+  packageDescription := "My play application description.",
+  rpmVendor := "tanacasino.github.com",
+  rpmUrl := Some("https://github.com/tanacasino/studyplay2"),
+  rpmLicense := Some("Apache 2 License")
 )
 
