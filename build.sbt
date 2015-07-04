@@ -34,7 +34,20 @@ val appDependencies = Seq(
   "com.sksamuel.elastic4s"        %% "elastic4s"                           % "1.5.17",
   "org.scalatest"                 %% "scalatest"                           % "2.2.1"                 % "test",
   "org.scalatestplus"             %% "play"                                % "1.4.0-M3"              % "test"
+)
 
+
+import com.scalapenos.sbt.prompt._
+import SbtPrompt.autoImport._
+
+val customPromptTheme = PromptTheme(
+  List(
+    text("[", fg(white)),
+    currentProject(fg(cyan)),
+    text("] ", fg(white)),
+    gitBranch(clean = fg(green), dirty = fg(red)),
+    text(" $ ", fg(yellow))
+  )
 )
 
 lazy val root = Project(
@@ -46,5 +59,8 @@ lazy val root = Project(
   version := appVersion
 ).settings(
   libraryDependencies ++= appDependencies
+).settings(
+  promptTheme := customPromptTheme,
+  shellPrompt := (implicit state => promptTheme.value.render(state))
 )
 
