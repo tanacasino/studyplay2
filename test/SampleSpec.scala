@@ -2,10 +2,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.ElasticDsl._
-
-import org.elasticsearch.common.settings.ImmutableSettings.Builder
 import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner
-
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 
@@ -14,7 +11,7 @@ class SampleSpec extends PlaySpec with BeforeAndAfterAll {
 
   lazy val runner = new ElasticsearchClusterRunner
 
-  val numOfNode = 1
+  val numOfNode = 3
 
 
   override def beforeAll(): Unit = {
@@ -36,7 +33,7 @@ class SampleSpec extends PlaySpec with BeforeAndAfterAll {
 
   "A Sample" must {
     "test with Elasticsearch" in {
-      implicit val client = ElasticClient.fromNode(runner.getNode(0))
+      implicit val client = ElasticClient.fromClient(runner.client)
       assertClusterStatus()
       val f = client.execute { create index "places" } flatMap { result =>
         runner.ensureYellow("places")
