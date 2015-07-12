@@ -1,11 +1,18 @@
 target
+/logs
 *.class
 *.jar
-*.swp
-/logs
 
 .idea
 .idea_modules
 
-.DS_Store
+.classpath
+.project
+.settings
+.cache-main
+.cache-tests
 
+.vagrant
+
+.DS_Store
+*.swp
