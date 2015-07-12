@@ -7,34 +7,12 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 
 
-class SampleSpec extends PlaySpec with BeforeAndAfterAll {
-
-  lazy val runner = new ElasticsearchClusterRunner
-
-  val numOfNode = 3
-
-
-  override def beforeAll(): Unit = {
-    val config = ElasticsearchClusterRunner
-                  .newConfigs()
-                  .clusterName("es-cl-run-" + System.currentTimeMillis())
-                  .ramIndexStore()
-                  .numOfNode(numOfNode)
-    runner.build(config)
-    runner.ensureYellow()
-  }
-
-
-  override def afterAll(): Unit = {
-    runner.close()
-    runner.clean()
-  }
-
+class SampleSpec extends ElasticsearchSpec {
 
   "A Sample" must {
     "test with Elasticsearch" in {
       implicit val client = ElasticClient.fromClient(runner.client)
-      assertClusterStatus()
+
       val f = client.execute { create index "places" } flatMap { result =>
         runner.ensureYellow("places")
         client.execute {
@@ -54,12 +32,30 @@ class SampleSpec extends PlaySpec with BeforeAndAfterAll {
     }
   }
 
+}
 
-  private def assertClusterStatus()(implicit client: ElasticClient) = {
-    val f = client.execute(clusterHealth)
-    val actual = f.await
-    actual.getNumberOfNodes mustBe numOfNode
+
+
+trait ElasticsearchSpec extends PlaySpec with BeforeAndAfterAll {
+
+  lazy val runner = new ElasticsearchClusterRunner
+
+  val numOfNode = 3
+
+  override def beforeAll(): Unit = {
+    val config = ElasticsearchClusterRunner
+                  .newConfigs()
+                  .clusterName("es-cl-run-" + System.currentTimeMillis())
+                  .ramIndexStore()
+                  .numOfNode(numOfNode)
+    runner.build(config)
+    runner.ensureYellow()
+  }
+
+
+  override def afterAll(): Unit = {
+    runner.close()
+    runner.clean()
   }
 
 }
-
