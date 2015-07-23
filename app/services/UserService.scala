@@ -13,7 +13,11 @@ import slick.driver.JdbcProfile
 import models.User
 
 
-class UserService @Inject()(val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
+class UserService @Inject()(
+  val dbConfigProvider: DatabaseConfigProvider
+)(
+  implicit ec: ExecutionContext
+) extends HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.driver.api._
 

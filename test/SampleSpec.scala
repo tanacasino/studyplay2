@@ -40,7 +40,8 @@ trait ElasticsearchSpec extends PlaySpec with BeforeAndAfterAll {
 
   lazy val runner = new ElasticsearchClusterRunner
 
-  val numOfNode = 3
+  //val numOfNode = 3
+  val numOfNode = 1
 
   override def beforeAll(): Unit = {
     val config = ElasticsearchClusterRunner
