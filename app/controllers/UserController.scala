@@ -14,7 +14,11 @@ import services.UserService
 import models.User
 
 
-class UserController @Inject()(service: UserService)(implicit ec: ExecutionContext) extends Controller {
+class UserController @Inject()(
+  service: UserService
+)(
+  implicit ec: ExecutionContext
+) extends Controller {
 
   val r = new Random
 
@@ -30,10 +34,9 @@ class UserController @Inject()(service: UserService)(implicit ec: ExecutionConte
 
   def test = Action.async {
     Future.sequence(List.fill(5)(r.nextInt).map(u => service.create(s"user-$u", r.nextInt))) map { users =>
-      Ok(users.toString)
+      Ok(Json.toJson(users))
     }
   }
 
 }
-
 
