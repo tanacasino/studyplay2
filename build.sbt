@@ -33,7 +33,7 @@ val appDependencies = Seq(
   "com.typesafe.play"             %% "play-slick"                          % "1.0.1",
   "com.typesafe.play"             %% "play-slick-evolutions"               % "1.0.1",
   "com.sksamuel.elastic4s"        %% "elastic4s"                           % "1.5.13",
-  "org.scalatest"                 %% "scalatest"                           % "2.2.1"                 % "test",
+  "org.scalatest"                 %% "scalatest"                           % "2.2.4"                 % "test",
   "org.scalatestplus"             %% "play"                                % "1.4.0-M3"              % "test",
   "org.codelibs"                   % "elasticsearch-cluster-runner"        % "1.5.0.1"               % "test"
 )
