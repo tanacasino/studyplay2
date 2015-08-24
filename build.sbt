@@ -12,7 +12,7 @@ val baseSettings = Seq(
     "-unchecked",
     "-Xlint",
     "-Ywarn-dead-code",
-    "-Ywarn-unused-import",
+    //"-Ywarn-unused-import",
     "-language:existentials",
     "-language:higherKinds",
     "-language:implicitConversions"
@@ -28,8 +28,8 @@ val baseSettings = Seq(
 val appDependencies = Seq(
   cache,
   ws,
-  "mysql"                          % "mysql-connector-java"                % "5.1.26",
-  "com.h2database"                 % "h2"                                  % "1.4.187",
+  "mysql"                          % "mysql-connector-java"                % "5.1.36",
+  "com.h2database"                 % "h2"                                  % "1.4.188",
   "com.typesafe.play"             %% "play-slick"                          % "1.0.1",
   "com.typesafe.play"             %% "play-slick-evolutions"               % "1.0.1",
   "com.sksamuel.elastic4s"        %% "elastic4s"                           % "1.5.13",
