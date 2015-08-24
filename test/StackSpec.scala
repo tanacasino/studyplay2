@@ -1,7 +1,6 @@
 import collection.mutable.Stack
 import org.scalatestplus.play._
 
-
 class StackSpec extends PlaySpec {
 
   "A Stack" must {
@@ -16,7 +15,7 @@ class StackSpec extends PlaySpec {
 
     "throw NoSuchElementException if an empty stack is popped" in {
       val emptyStack = new Stack[Int]
-      a [NoSuchElementException] must be thrownBy {
+      a[NoSuchElementException] must be thrownBy {
         emptyStack.pop()
       }
     }

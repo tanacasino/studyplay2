@@ -39,6 +39,13 @@ val appDependencies = Seq(
 )
 
 
+// scalariform
+import scalariform.formatter.preferences._
+
+scalariformSettings
+
+
+// prompt
 import com.scalapenos.sbt.prompt._
 import SbtPrompt.autoImport._
 

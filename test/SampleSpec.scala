@@ -6,7 +6,6 @@ import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 
-
 class SampleSpec extends ElasticsearchSpec {
 
   "A Sample" must {
@@ -34,8 +33,6 @@ class SampleSpec extends ElasticsearchSpec {
 
 }
 
-
-
 trait ElasticsearchSpec extends PlaySpec with BeforeAndAfterAll {
 
   lazy val runner = new ElasticsearchClusterRunner
@@ -45,14 +42,13 @@ trait ElasticsearchSpec extends PlaySpec with BeforeAndAfterAll {
 
   override def beforeAll(): Unit = {
     val config = ElasticsearchClusterRunner
-                  .newConfigs()
-                  .clusterName("es-cl-run-" + System.currentTimeMillis())
-                  .ramIndexStore()
-                  .numOfNode(numOfNode)
+      .newConfigs()
+      .clusterName("es-cl-run-" + System.currentTimeMillis())
+      .ramIndexStore()
+      .numOfNode(numOfNode)
     runner.build(config)
     runner.ensureYellow()
   }
-
 
   override def afterAll(): Unit = {
     runner.close()
