@@ -1,4 +1,4 @@
 #!/bin/bash
 
-./bin/sbt $@
+.sbt/bin/sbt $@
 
