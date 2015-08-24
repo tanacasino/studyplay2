@@ -29,7 +29,8 @@ class UserService @Inject() (
   private val Users = TableQuery[UsersTable]
 
   def create(name: String, age: Int): Future[User] = db.run {
-    (Users.map(u => (u.name, u.age))
+    (
+      Users.map(u => (u.name, u.age))
       returning Users.map(_.id)
       into ((nameAge, id) => User(id, nameAge._1, nameAge._2))
     ) += ((name, age))
