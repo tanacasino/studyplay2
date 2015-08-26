@@ -41,8 +41,11 @@ val appDependencies = Seq(
 
 // scalariform
 import scalariform.formatter.preferences._
+import ScalariformKeys._
 
-scalariformSettings
+defaultScalariformSettings
+
+excludeFilter in format := ("Tables.scala": FileFilter)
 
 
 // prompt
@@ -79,4 +82,59 @@ lazy val root = Project(
   rpmUrl := Some("https://github.com/tanacasino/studyplay2"),
   rpmLicense := Some("Apache 2 License")
 )
+
+
+
+
+/**
+ * Slick Codegen Task
+ */
+val slickCodeGen = TaskKey[Unit]("slick-codegen", "Generate Slick Code!!!")
+
+slickCodeGen := {
+  println("Generate Slick Code Task")
+
+  import com.typesafe.config.ConfigFactory
+  import collection.JavaConverters._
+  import java.nio.file.Paths
+
+  import slick.codegen.SourceCodeGenerator
+
+  ConfigFactory.parseFileAnySyntax(Paths.get("conf", "application.conf").toFile)
+               .getConfig("slick.dbs")
+               .root.entrySet.asScala.map { c =>
+    val config = c.getValue.atPath(c.getKey).getConfig(c.getKey)
+
+    val name = c.getKey
+    val driver = config.getString("driver").stripSuffix("$")
+    val dbDriver = config.getString("db.driver")
+    val dbUrl = config.getString("db.url")
+    val dbUser = config.getString("db.user")
+    val dbPassword =config.getString("db.password")
+    val outDir = config.getString("outDir")
+    val outPackage = config.getString("outPackage")
+
+    println(s"Generating slick code for $name")
+    println(s"driver: $driver")
+    println(s"dbDriver: $dbDriver")
+    println(s"dbUrl: $dbUrl")
+    println(s"outDir: $outDir")
+    println(s"outPackage: $outPackage")
+    SourceCodeGenerator.main(
+      Array(
+        driver,
+        dbDriver,
+        dbUrl,
+        outDir,
+        outPackage,
+        dbUser,
+        dbPassword
+      )
+    )
+    println(s"Generated slick code for $name\n")
+  }
+
+}
+
+slickCodeGen <<= slickCodeGen
 
