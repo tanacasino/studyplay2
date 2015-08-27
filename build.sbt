@@ -62,6 +62,8 @@ val customPromptTheme = PromptTheme(
   )
 )
 
+
+// Main
 lazy val root = Project(
   appName,
   file(".")
