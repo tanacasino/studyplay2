@@ -9,6 +9,7 @@ import play.api.mvc._
 import slick.driver.JdbcProfile
 
 import services.repositories.Tables._
+import auth.Account
 
 class UserService @Inject() (
     val dbConfigProvider: DatabaseConfigProvider)(
@@ -28,5 +29,18 @@ class UserService @Inject() (
     Users.result
   }
 
+  def find(userId: Long): Future[Option[Account]] = db.run {
+    Users.filter(_.userId === userId.bind).result
+  }.map {
+    case user :: Nil =>
+      Some(
+        Account(
+          userId = user.userId,
+          name = user.name,
+          isAdmin = user.isAdmin
+        )
+      )
+    case _ => None
+  }
 }
 
