@@ -10,13 +10,21 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import services.UserService
-import models.User
+import services.repositories.Tables._
 
 class UserController @Inject() (service: UserService)(implicit ec: ExecutionContext) extends Controller {
 
   val r = new Random
 
-  implicit val userWrites = Json.writes[User]
+  implicit val usersRowWrites = new Writes[UsersRow] {
+    def writes(user: UsersRow): JsValue = {
+      Json.obj(
+        "userId" -> JsNumber(user.userId),
+        "name" -> JsString(user.name),
+        "isAdmin" -> JsBoolean(user.isAdmin)
+      )
+    }
+  }
 
   def list = Action.async {
     service.list map { users =>
@@ -25,7 +33,7 @@ class UserController @Inject() (service: UserService)(implicit ec: ExecutionCont
   }
 
   def test = Action.async {
-    Future.sequence(List.fill(5)(r.nextInt).map(u => service.create(s"user-$u", r.nextInt))) map { users =>
+    Future.sequence(List.fill(5)(r.nextInt).map(u => service.create(s"user-$u", "password"))) map { users =>
       Ok(Json.toJson(users))
     }
   }

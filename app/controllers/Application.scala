@@ -2,14 +2,14 @@ package controllers
 
 import javax.inject.Inject
 
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.db.slick.HasDatabaseConfigProvider
+import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.mvc._
 
 import slick.driver.JdbcProfile
 
-class Application @Inject() (val dbConfigProvider: DatabaseConfigProvider) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
+class Application @Inject() (
+    val dbConfigProvider: DatabaseConfigProvider) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.driver.api._
 
