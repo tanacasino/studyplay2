@@ -2,10 +2,11 @@ package auth
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
-import scala.reflect.{ClassTag,classTag}
+import scala.reflect.{ ClassTag, classTag }
 
 import play.api.mvc._
 import play.api.mvc.Results._
+import play.api.Logger
 import jp.t2v.lab.play2.auth.AuthConfig
 
 import services.UserService
@@ -20,6 +21,8 @@ case object Normal extends Role
 
 trait AuthConfigImpl extends AuthConfig {
 
+  val authLogger = Logger("auth")
+
   val userService: UserService
 
   type Id = Long
@@ -33,6 +36,7 @@ trait AuthConfigImpl extends AuthConfig {
   override def sessionTimeoutInSeconds: Int = 3600
 
   override def resolveUser(id: Id)(implicit context: ExecutionContext): Future[Option[User]] = {
+    authLogger.info(s"resolveUser: $id")
     userService.find(id)
   }
 
@@ -45,14 +49,17 @@ trait AuthConfigImpl extends AuthConfig {
   }
 
   override def authenticationFailed(request: RequestHeader)(implicit context: ExecutionContext): Future[Result] = {
+    authLogger.info(s"authenticationFailed: $request")
     Future.successful(Unauthorized)
   }
 
   override def authorizationFailed(request: RequestHeader, user: User, authority: Option[Authority])(implicit context: ExecutionContext): Future[Result] = {
+    authLogger.info(s"authorizationFailed: $request")
     Future.successful(Forbidden)
   }
 
   override def authorize(user: User, authority: Authority)(implicit context: ExecutionContext): Future[Boolean] = Future.successful {
+    authLogger.info(s"authorize: $user, $authority")
     (user.isAdmin, authority) match {
       case (true, _) => true
       case (false, Normal) => true

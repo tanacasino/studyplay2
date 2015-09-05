@@ -13,9 +13,13 @@ bin/
 .cache-main
 .cache-tests
 
+.ensime
+.ensime_cache
+
 .vagrant
 
 .DS_Store
 *.swp
 *.bak
 *.bk
+

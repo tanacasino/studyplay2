@@ -1,0 +1,15 @@
+@(auth: Form[AuthData])(implicit messages: Messages)
+
+@import helper._
+
+@main("Welcome to Play") {
+
+  @form(routes.AuthController.signin()) {
+    @inputText(auth("username"))
+    @inputPassword(auth("password"))
+
+    <div class="buttons">
+      <input type="submit" value="signin"/>
+    </div>
+  }
+}

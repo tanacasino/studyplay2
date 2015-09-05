@@ -12,8 +12,11 @@ import services.repositories.Tables._
 import auth.Account
 
 class UserService @Inject() (
-    val dbConfigProvider: DatabaseConfigProvider)(
-        implicit ec: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
+    val dbConfigProvider: DatabaseConfigProvider
+)(
+    implicit
+    ec: ExecutionContext
+) extends HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.driver.api._
 
@@ -30,17 +33,31 @@ class UserService @Inject() (
   }
 
   def find(userId: Long): Future[Option[Account]] = db.run {
-    Users.filter(_.userId === userId.bind).result
-  }.map {
-    case user :: Nil =>
-      Some(
-        Account(
-          userId = user.userId,
-          name = user.name,
-          isAdmin = user.isAdmin
-        )
-      )
-    case _ => None
+    Users
+      .filter(_.userId === userId.bind)
+      .result
+      .headOption
+  }.map(toAccountOpt)
+
+  def authenticate(username: String, password: String) = db.run {
+    Users
+      .filter(_.name === username.bind)
+      .filter(_.password === password.bind)
+      .result
+      .headOption
+  }.map(toAccountOpt)
+
+  lazy val toAccountOpt = lift(toAccount)
+
+  private def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
+
+  private def toAccount(user: UsersRow): Account = {
+    Account(
+      userId = user.userId,
+      name = user.name,
+      isAdmin = user.isAdmin
+    )
   }
+
 }
 
