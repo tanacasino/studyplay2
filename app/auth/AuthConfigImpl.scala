@@ -7,7 +7,7 @@ import scala.reflect.{ ClassTag, classTag }
 import play.api.mvc._
 import play.api.mvc.Results._
 import play.api.Logger
-import jp.t2v.lab.play2.auth.AuthConfig
+import jp.t2v.lab.play2.auth._
 
 import services.UserService
 
@@ -33,6 +33,7 @@ trait AuthConfigImpl extends AuthConfig {
 
   val idTag: ClassTag[Id] = classTag[Id]
 
+  // TODO configuration file
   override def sessionTimeoutInSeconds: Int = 3600
 
   override def resolveUser(id: Id)(implicit context: ExecutionContext): Future[Option[User]] = {
@@ -67,4 +68,12 @@ trait AuthConfigImpl extends AuthConfig {
     }
   }
 
+  override lazy val tokenAccessor = new CookieTokenAccessor(
+    // TODO configuration file
+    cookieName = "SESS_ID",
+    cookieSecureOption = play.api.Play.isProd(play.api.Play.current),
+    cookieMaxAge       = Some(sessionTimeoutInSeconds)
+  )
+
 }
+

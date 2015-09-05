@@ -18,6 +18,5 @@ POST    /signin                     @controllers.AuthController.signin
 
 GET     /profile                    @controllers.AuthController.profile
 
-
 GET     /admin                      @controllers.AdminController.index
 

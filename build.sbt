@@ -34,7 +34,7 @@ val appDependencies = Seq(
   "com.typesafe.play"             %% "play-slick"                          % "1.0.1",
   "com.typesafe.play"             %% "play-slick-evolutions"               % "1.0.1",
   "jp.t2v"                        %% "play2-auth"                          % "0.14.1",
-  //"com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
+  "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
 
   // Others
   "com.sksamuel.elastic4s"        %% "elastic4s"                           % "1.5.13",
@@ -74,6 +74,8 @@ val customPromptTheme = PromptTheme(
 )
 
 
+import play.PlayImport.PlayKeys._
+
 // Main
 lazy val root = Project(
   appName,
@@ -81,7 +83,8 @@ lazy val root = Project(
 ).enablePlugins(PlayScala).settings(
   baseSettings: _*
 ).settings(
-  version := appVersion
+  version := appVersion,
+  playDefaultPort := 9000
 ).settings(
   libraryDependencies ++= appDependencies
 ).settings(

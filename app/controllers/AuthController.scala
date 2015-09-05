@@ -53,26 +53,8 @@ class AuthController @Inject() (
         userService.authenticate(authData.username, authData.password).flatMap { userOpt =>
           userOpt match {
             case Some(account) => gotoLoginSucceeded(account.userId)
-            // TODO(tanacasino): Show sigin page with error form
+            // TODO(tanacasino): Show signin page with error form
             case None => Future.successful(Unauthorized(Json.obj("message" -> "authentication failed")))
-          }
-        }
-      }
-    )
-  }
-
-  def signinJson() = Action.async(parse.json) { implicit req =>
-    req.body.validate[AuthData].fold(
-      errors => Future.successful(BadRequest(JsError.toJson(errors))),
-      validated => {
-        userService.authenticate(validated.username, validated.password).flatMap { userOpt =>
-          userOpt match {
-            case Some(account) =>
-              gotoLoginSucceeded(account.userId)
-            case None =>
-              Future.successful(
-                Unauthorized(Json.obj("message" -> "authentication failed"))
-              )
           }
         }
       }
