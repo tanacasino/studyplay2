@@ -3,3 +3,11 @@
 [![Build Status](https://travis-ci.org/tanacasino/studyplay2.svg?branch=master)](https://travis-ci.org/tanacasino/studyplay2)
 
 
+## TODO ##
+
+- Use cache api on session info
+- Refactor Authentication
+- Redirect to source url when not authenticated
+- Hashed password using jbcrypt
+
+
