@@ -7,7 +7,8 @@ import scala.concurrent.{ ExecutionContext, Future }
 import jp.t2v.lab.play2.auth.{ AuthElement, LoginLogout }
 import play.api.mvc._
 
-import auth._
+import auth.AuthConfigImpl
+import models._
 import services.UserService
 
 class AdminController @Inject() (

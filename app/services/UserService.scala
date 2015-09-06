@@ -8,8 +8,9 @@ import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import play.api.mvc._
 import slick.driver.JdbcProfile
 
+import models.User
 import services.repositories.Tables._
-import auth.Account
+
 
 class UserService @Inject() (
     val dbConfigProvider: DatabaseConfigProvider
@@ -32,12 +33,12 @@ class UserService @Inject() (
     Users.result
   }
 
-  def find(userId: Long): Future[Option[Account]] = db.run {
+  def find(userId: Long): Future[Option[User]] = db.run {
     Users
       .filter(_.userId === userId.bind)
       .result
       .headOption
-  }.map(toAccountOpt)
+  }.map(toUserOpt)
 
   def authenticate(username: String, password: String) = db.run {
     Users
@@ -45,19 +46,19 @@ class UserService @Inject() (
       .filter(_.password === password.bind)
       .result
       .headOption
-  }.map(toAccountOpt)
+  }.map(toUserOpt)
 
-  lazy val toAccountOpt = lift(toAccount)
+  lazy val toUserOpt = lift(toUser)
 
-  private def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
-
-  private def toAccount(user: UsersRow): Account = {
-    Account(
+  private def toUser(user: UsersRow): User = {
+    User(
       userId = user.userId,
       name = user.name,
       isAdmin = user.isAdmin
     )
   }
+
+  private def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
 
 }
 

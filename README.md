@@ -5,7 +5,6 @@
 
 ## TODO ##
 
-- Use cache api on session info
 - Refactor Authentication
 - Redirect to source url when not authenticated
 - Hashed password using jbcrypt

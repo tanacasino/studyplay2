@@ -16,6 +16,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import auth.AuthConfigImpl
+import models._
 import services.UserService
 import services.repositories.Tables._
 
@@ -61,7 +62,7 @@ class AuthController @Inject() (
     )
   }
 
-  def profile = AsyncStack(AuthorityKey -> auth.Normal) { implicit req =>
+  def profile = AsyncStack(AuthorityKey -> Normal) { implicit req =>
     Future.successful(Ok("Profile"))
   }
 

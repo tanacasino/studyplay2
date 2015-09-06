@@ -11,14 +11,6 @@ import jp.t2v.lab.play2.auth._
 
 import services.UserService
 
-// Account
-case class Account(userId: Long, name: String, isAdmin: Boolean)
-
-// Roles
-sealed trait Role
-case object Admin extends Role
-case object Normal extends Role
-
 trait AuthConfigImpl extends AuthConfig {
 
   val authLogger = Logger("auth")
@@ -27,9 +19,9 @@ trait AuthConfigImpl extends AuthConfig {
 
   type Id = Long
 
-  type User = Account
+  type User = models.User
 
-  type Authority = Role
+  type Authority = models.Role
 
   val idTag: ClassTag[Id] = classTag[Id]
 
@@ -63,7 +55,7 @@ trait AuthConfigImpl extends AuthConfig {
     authLogger.info(s"authorize: $user, $authority")
     (user.isAdmin, authority) match {
       case (true, _) => true
-      case (false, Normal) => true
+      case (false, models.Normal) => true
       case _ => false
     }
   }
