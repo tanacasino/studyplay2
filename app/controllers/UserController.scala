@@ -16,16 +16,6 @@ class UserController @Inject() (service: UserService)(implicit ec: ExecutionCont
 
   val r = new Random
 
-  implicit val usersRowWrites = new Writes[UsersRow] {
-    def writes(user: UsersRow): JsValue = {
-      Json.obj(
-        "userId" -> JsNumber(user.userId),
-        "name" -> JsString(user.name),
-        "isAdmin" -> JsBoolean(user.isAdmin)
-      )
-    }
-  }
-
   def list = Action.async {
     service.list map { users =>
       Ok(Json.toJson(users))

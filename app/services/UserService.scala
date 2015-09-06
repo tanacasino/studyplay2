@@ -21,17 +21,17 @@ class UserService @Inject() (
 
   import dbConfig.driver.api._
 
-  def create(name: String, password: String, isAdmin: Boolean = false): Future[UsersRow] = db.run {
+  def create(name: String, password: String, isAdmin: Boolean = false): Future[User] = db.run {
     (
       Users.map(u => (u.name, u.password, u.isAdmin))
       returning Users.map(_.userId)
       into ((u, userId) => UsersRow(userId, u._1, u._2, u._3))
     ) += ((name, password, isAdmin))
-  }
+  }.map(toUser)
 
-  def list(): Future[Seq[UsersRow]] = db.run {
+  def list(): Future[Seq[User]] = db.run {
     Users.result
-  }
+  }.map(_.map(toUser))
 
   def find(userId: Long): Future[Option[User]] = db.run {
     Users
@@ -40,7 +40,7 @@ class UserService @Inject() (
       .headOption
   }.map(toUserOpt)
 
-  def authenticate(username: String, password: String) = db.run {
+  def authenticate(username: String, password: String): Future[Option[User]] = db.run {
     Users
       .filter(_.name === username.bind)
       .filter(_.password === password.bind)
