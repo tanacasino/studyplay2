@@ -63,7 +63,11 @@ class AuthController @Inject() (
   }
 
   def profile = AsyncStack(AuthorityKey -> Normal) { implicit req =>
-    Future.successful(Ok("Profile"))
+    val user = loggedIn
+    userService.find(user.userId).map {
+      case Some(user) => Ok(views.html.profile(user))
+      case None => InternalServerError
+    }
   }
 
 }
