@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS users (
 
 
 # --- !Downs
-DROP TABLE users IF EXISTS;
+DROP TABLE IF EXISTS users;
 

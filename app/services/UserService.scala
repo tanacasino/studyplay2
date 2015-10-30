@@ -4,24 +4,12 @@ import javax.inject.Inject
 
 import scala.concurrent.{ ExecutionContext, Future }
 
-import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
-import play.api.mvc._
-import slick.driver.JdbcProfile
-
 import models.User
-import services.repositories.Tables._
+import services.repositories.Tables._; import profile.api._
 
+class UserService @Inject() (implicit val ec: ExecutionContext) {
 
-class UserService @Inject() (
-    val dbConfigProvider: DatabaseConfigProvider
-)(
-    implicit
-    ec: ExecutionContext
-) extends HasDatabaseConfigProvider[JdbcProfile] {
-
-  import dbConfig.driver.api._
-
-  def create(name: String, password: String, isAdmin: Boolean = false): Future[User] = db.run {
+  def create(name: String, password: String, isAdmin: Boolean = false): DBIO[User] = {
     (
       Users.map(u => (u.name, u.password, u.isAdmin))
       returning Users.map(_.userId)
@@ -29,18 +17,18 @@ class UserService @Inject() (
     ) += ((name, password, isAdmin))
   }.map(toUser)
 
-  def list(): Future[Seq[User]] = db.run {
+  def list(): DBIO[Seq[User]] = {
     Users.result
   }.map(_.map(toUser))
 
-  def find(userId: Long): Future[Option[User]] = db.run {
+  def find(userId: Long): DBIO[Option[User]] = {
     Users
       .filter(_.userId === userId.bind)
       .result
       .headOption
   }.map(toUserOpt)
 
-  def authenticate(username: String, password: String): Future[Option[User]] = db.run {
+  def authenticate(username: String, password: String): DBIO[Option[User]] = {
     Users
       .filter(_.name === username.bind)
       .filter(_.password === password.bind)

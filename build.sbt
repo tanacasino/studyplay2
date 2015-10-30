@@ -31,8 +31,8 @@ val appDependencies = Seq(
   ws,
 
   // Play Thirdparty libs
-  "com.typesafe.play"             %% "play-slick"                          % "1.0.1",
-  "com.typesafe.play"             %% "play-slick-evolutions"               % "1.0.1",
+  "com.typesafe.play"             %% "play-slick"                          % "1.1.0",
+  "com.typesafe.play"             %% "play-slick-evolutions"               % "1.1.0",
   "jp.t2v"                        %% "play2-auth"                          % "0.14.1",
   "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
 

@@ -9,9 +9,15 @@ import play.api.mvc.Results._
 import play.api.Logger
 import jp.t2v.lab.play2.auth._
 
+import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
+import slick.driver.JdbcProfile
+
 import services.UserService
 
 trait AuthConfigImpl extends AuthConfig {
+  self: HasDatabaseConfigProvider[JdbcProfile] =>
+
+  import driver.api._
 
   val authLogger = Logger("auth")
 
@@ -30,7 +36,7 @@ trait AuthConfigImpl extends AuthConfig {
 
   override def resolveUser(id: Id)(implicit context: ExecutionContext): Future[Option[User]] = {
     authLogger.info(s"resolveUser: $id")
-    userService.find(id)
+    db.run(userService.find(id))
   }
 
   override def loginSucceeded(request: RequestHeader)(implicit context: ExecutionContext): Future[Result] = {
@@ -64,7 +70,7 @@ trait AuthConfigImpl extends AuthConfig {
     // TODO configuration file
     cookieName = "SESS_ID",
     cookieSecureOption = play.api.Play.isProd(play.api.Play.current),
-    cookieMaxAge       = Some(sessionTimeoutInSeconds)
+    cookieMaxAge = Some(sessionTimeoutInSeconds)
   )
 
 }

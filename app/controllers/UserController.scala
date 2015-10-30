@@ -8,24 +8,36 @@ import scala.util.Random
 import play.api.libs.json.Json
 import play.api.libs.json._
 import play.api.mvc._
+import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
+import slick.driver.JdbcProfile
 
+import models.User
 import services.UserService
 import services.repositories.Tables._
 
-class UserController @Inject() (service: UserService)(implicit ec: ExecutionContext) extends Controller {
+class UserController @Inject() (
+    val dbConfigProvider: DatabaseConfigProvider,
+    val userService: UserService)(implicit val ec: ExecutionContext) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
+
+  import profile.api._
 
   val r = new Random
 
-  def list = Action.async {
-    service.list map { users =>
+  def list = play.api.mvc.Action.async {
+    val action: DBIO[Result] = userService.list map { users =>
+      Ok(Json.toJson(users))
+    }
+    db.run(action)
+  }
+
+  def test = Action.async {
+    Future.sequence(List.fill(5)(r.nextInt).map(u => createUser(s"user-$u", "password"))) map { users =>
       Ok(Json.toJson(users))
     }
   }
 
-  def test = Action.async {
-    Future.sequence(List.fill(5)(r.nextInt).map(u => service.create(s"user-$u", "password"))) map { users =>
-      Ok(Json.toJson(users))
-    }
+  private def createUser(user: String, pass: String): Future[User] = db.run {
+    userService.create(user, pass)
   }
 
 }
