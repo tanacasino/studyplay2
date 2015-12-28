@@ -41,6 +41,8 @@ val appDependencies = Seq(
   "mysql"                          % "mysql-connector-java"                % "5.1.36",
   "com.h2database"                 % "h2"                                  % "1.4.188",
   "org.mindrot"                    % "jbcrypt"                             % "0.3m",
+  "org.scalaz"                    %% "scalaz-core"                         % "7.1.5",
+
 
   // Test
   "org.scalatest"                 %% "scalatest"                           % "2.2.4"                 % "test",
