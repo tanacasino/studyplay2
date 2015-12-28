@@ -5,7 +5,7 @@ import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 import models.User
-import repositories.jdbc.Tables._, profile.api._
+import repositories.Tables._, profile.api._
 
 class UserRepository @Inject() ()(implicit val ec: ExecutionContext) {
 

@@ -8,5 +8,7 @@
 - Refactor Authentication
 - Redirect to source url when not authenticated
 - Hashed password using jbcrypt
-
+- Improve error handle
+- Scala.js
+- Split modules
 

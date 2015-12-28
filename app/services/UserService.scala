@@ -8,7 +8,7 @@ import slick.dbio.DBIO
 import models.User
 import repositories.jdbc.UserRepository
 
-// TODO(tanacasino): Serviceをトランザクション境界として db.run しちゃうでもいいかも。全部DBIOになっちゃうよ
+// TODO(tanacasino): Serviceをトランザクション境界として serviceで db.run しちゃうでもいいかも。全部DBIOになっちゃうよ
 class UserService @Inject() (userRepository: UserRepository)(implicit val ec: ExecutionContext) {
 
   // TODO(tanacasino): パスワードをハッシュ化する。jbcrypto
