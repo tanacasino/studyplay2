@@ -1,4 +1,4 @@
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.3")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.6")
 
 // Scalariform
 resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
@@ -12,6 +12,6 @@ addSbtPlugin("com.scalapenos" % "sbt-prompt" % "0.2.1")
 // For Slick Codegen
 libraryDependencies ++= Seq(
   "mysql"                         % "mysql-connector-java"  % "5.1.36",
-  "com.typesafe.slick"            %% "slick-codegen"        % "3.1.0"
+  "com.typesafe.slick"            %% "slick-codegen"        % "3.1.1"
 )
 
