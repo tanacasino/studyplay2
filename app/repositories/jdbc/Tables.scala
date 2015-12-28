@@ -1,4 +1,4 @@
-package services.repositories
+package repositories.jdbc
 // AUTO-GENERATED Slick data model
 /** Stand-alone Slick data model for immediate use */
 object Tables extends {
@@ -14,7 +14,7 @@ trait Tables {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema = PlayEvolutions.schema ++ Users.schema
+  lazy val schema: profile.SchemaDescription = PlayEvolutions.schema ++ Users.schema
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
 
@@ -57,7 +57,7 @@ trait Tables {
   lazy val PlayEvolutions = new TableQuery(tag => new PlayEvolutions(tag))
 
   /** Entity class storing rows of table Users
-   *  @param userId Database column user_id SqlType(BIGINT), PrimaryKey
+   *  @param userId Database column user_id SqlType(BIGINT), AutoInc, PrimaryKey
    *  @param name Database column name SqlType(VARCHAR), Length(50,true)
    *  @param password Database column password SqlType(VARCHAR), Length(255,true)
    *  @param isAdmin Database column is_admin SqlType(BIT) */
@@ -73,8 +73,8 @@ trait Tables {
     /** Maps whole row to an option. Useful for outer joins. */
     def ? = (Rep.Some(userId), Rep.Some(name), Rep.Some(password), Rep.Some(isAdmin)).shaped.<>({r=>import r._; _1.map(_=> UsersRow.tupled((_1.get, _2.get, _3.get, _4.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
-    /** Database column user_id SqlType(BIGINT), PrimaryKey */
-    val userId: Rep[Long] = column[Long]("user_id", O.PrimaryKey)
+    /** Database column user_id SqlType(BIGINT), AutoInc, PrimaryKey */
+    val userId: Rep[Long] = column[Long]("user_id", O.AutoInc, O.PrimaryKey)
     /** Database column name SqlType(VARCHAR), Length(50,true) */
     val name: Rep[String] = column[String]("name", O.Length(50,varying=true))
     /** Database column password SqlType(VARCHAR), Length(255,true) */

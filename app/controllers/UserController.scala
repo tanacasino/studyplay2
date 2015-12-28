@@ -9,18 +9,16 @@ import play.api.libs.json.Json
 import play.api.libs.json._
 import play.api.mvc._
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
+import slick.dbio.DBIO
 import slick.driver.JdbcProfile
 
 import models.User
 import services.UserService
-import services.repositories.Tables._
 
 class UserController @Inject() (
   val dbConfigProvider: DatabaseConfigProvider,
   val userService: UserService
 )(implicit val ec: ExecutionContext) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
-
-  import profile.api._
 
   val r = new Random
 
