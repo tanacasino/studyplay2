@@ -176,9 +176,9 @@ class JsonSpec extends PlaySpec {
       val applicativeJsResult: Applicative[JsResult] = JsResult.applicativeJsResult
       val applicativeReads: Applicative[Reads] = Reads.applicative(applicativeJsResult)
       val functionalCanBuildReads: FunctionalCanBuild[Reads] = syntax.functionalCanBuildApplicative(applicativeReads)
-      val ops = syntax.toFunctionalBuilderOps(nameReads)(functionalCanBuildReads)
-      val personBuilder = ops.and(ageReads)
-      val personReadsMySelf = personBuilder.apply(Person.apply _)
+      val ops: FunctionalBuilderOps[Reads, String] = syntax.toFunctionalBuilderOps(nameReads)(functionalCanBuildReads)
+      val personBuilder: FunctionalBuilder[Reads]#CanBuild2[String, Int] = ops.and(ageReads)
+      val personReadsMySelf: Reads[Person] = personBuilder.apply(Person.apply _)
 
       println("myself")
       println(Json.fromJson(jsValue)(personReadsMySelf))
