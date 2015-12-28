@@ -17,7 +17,6 @@ class UserService @Inject() (implicit val ec: ExecutionContext) {
     ) += ((name, password, isAdmin))
   }.map(toUser)
 
-
   def insertExamples(name: String, password: String, isAdmin: Boolean = false): DBIO[UsersRow] = {
     // 例えばこんなイメージのスキーマに対して
     // case class UsersRow(userId: Long, name: String, password: String, isAdmin: Boolean)
@@ -27,12 +26,10 @@ class UserService @Inject() (implicit val ec: ExecutionContext) {
     Users
       .map(u => (u.name, u.password, u.isAdmin)) += ((name, password, isAdmin))
 
-
     // DBIO[Long] (pk件数)が返却されるようにする
     Users
       .map(u => (u.name, u.password, u.isAdmin))
       .returning(Users.map(_.userId)) += ((name, password, isAdmin))
-
 
     // DBIO[UsersRow] が返却されるようにする
     // 内部的には、DBサーバからはPKしか帰ってこないので、返ってきたPKと += で渡したタプルを使ってUsersRowを作る
@@ -44,7 +41,6 @@ class UserService @Inject() (implicit val ec: ExecutionContext) {
         UsersRow(userId, u._1, u._2, u._3)
       } += ((name, password, isAdmin))
   }
-
 
   def list(): DBIO[Seq[User]] = {
     Users.result
@@ -64,7 +60,6 @@ class UserService @Inject() (implicit val ec: ExecutionContext) {
       .result
       .headOption
   }.map(toUserOpt)
-
 
   private def toUser(user: UsersRow): User = {
     User(

@@ -4,8 +4,8 @@ import org.scalatestplus.play._
 import play.api.libs.json._
 
 /**
- * Play Json/Reads/Writes の勉強
- */
+  * Play Json/Reads/Writes の勉強
+  */
 class JsonSpec extends PlaySpec {
 
   case class Person(name: String, age: Int)

@@ -54,11 +54,14 @@ val appDependencies = Seq(
 
 // scalariform
 import scalariform.formatter.preferences._
-import ScalariformKeys._
 
-defaultScalariformSettings
+scalariformSettings
 
-excludeFilter in format := ("Tables.scala": FileFilter)
+excludeFilter in scalariformFormat := ("Tables.scala": FileFilter)
+
+scalariformPreferences := scalariformPreferences.value
+  .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, true)
+  .setPreference(DoubleIndentClassDeclaration, false)
 
 
 // prompt

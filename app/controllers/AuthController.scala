@@ -25,10 +25,13 @@ import services.repositories.Tables._
 case class AuthData(username: String, password: String)
 
 class AuthController @Inject() (
-    val dbConfigProvider: DatabaseConfigProvider,
-    val messagesApi: MessagesApi,
-    val userService: UserService)(
-        implicit val ec: ExecutionContext) extends Controller with AuthElement with LoginLogout with AuthConfigImpl with HasDatabaseConfigProvider[JdbcProfile] with I18nSupport {
+  val dbConfigProvider: DatabaseConfigProvider,
+  val messagesApi: MessagesApi,
+  val userService: UserService
+)(
+  implicit
+  val ec: ExecutionContext
+) extends Controller with AuthElement with LoginLogout with AuthConfigImpl with HasDatabaseConfigProvider[JdbcProfile] with I18nSupport {
 
   val logger = Logger(this.getClass)
 

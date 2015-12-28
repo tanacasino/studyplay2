@@ -9,7 +9,8 @@ import play.api.mvc._
 import slick.driver.JdbcProfile
 
 class Application @Inject() (
-    val dbConfigProvider: DatabaseConfigProvider) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
+  val dbConfigProvider: DatabaseConfigProvider
+) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
 
   import dbConfig.driver.api._
 

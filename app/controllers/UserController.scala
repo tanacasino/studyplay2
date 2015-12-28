@@ -16,8 +16,9 @@ import services.UserService
 import services.repositories.Tables._
 
 class UserController @Inject() (
-    val dbConfigProvider: DatabaseConfigProvider,
-    val userService: UserService)(implicit val ec: ExecutionContext) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
+  val dbConfigProvider: DatabaseConfigProvider,
+  val userService: UserService
+)(implicit val ec: ExecutionContext) extends Controller with HasDatabaseConfigProvider[JdbcProfile] {
 
   import profile.api._
 

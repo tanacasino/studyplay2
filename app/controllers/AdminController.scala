@@ -16,11 +16,14 @@ import services.UserService
 
 class AdminController @Inject() (
   val dbConfigProvider: DatabaseConfigProvider,
-  val userService: UserService)(
-    implicit val ec: ExecutionContext) extends Controller
-    with AuthElement
-    with AuthConfigImpl
-    with HasDatabaseConfigProvider[JdbcProfile] {
+  val userService: UserService
+)(
+  implicit
+  val ec: ExecutionContext
+) extends Controller
+  with AuthElement
+  with AuthConfigImpl
+  with HasDatabaseConfigProvider[JdbcProfile] {
 
   def index = AsyncStack(AuthorityKey -> Admin) { implicit req =>
     Future.successful(Ok("Admin Page"))
