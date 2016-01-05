@@ -57,7 +57,14 @@ import scalariform.formatter.preferences._
 
 scalariformSettings
 
-excludeFilter in scalariformFormat := ("Tables.scala": FileFilter)
+
+// Slick/Playのgenerate したscalaファイルを除外する
+excludeFilter in scalariformFormat := new SimpleFileFilter(target => {
+  val baseDirectory = file(".").getCanonicalPath
+  lazy val relativePath = target.getCanonicalPath.stripPrefix(baseDirectory)
+  target.getName == "Tables.scala" ||
+    relativePath.startsWith("/target/scala-2.11/routes")
+})
 
 scalariformPreferences := scalariformPreferences.value
   .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, true)
