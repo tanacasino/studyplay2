@@ -1,27 +1,22 @@
 package auth
 
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ ExecutionContext, Future }
 import scala.reflect.{ ClassTag, classTag }
 
-import play.api.mvc._
-import play.api.mvc.Results._
-import play.api.Logger
 import jp.t2v.lab.play2.auth._
-
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
+import play.api.mvc.Results._
+import play.api.mvc._
+import play.api.{ Environment, Logger, Mode }
 import slick.driver.JdbcProfile
 
-import services.UserService
-
-trait AuthConfigImpl extends AuthConfig {
-  self: HasDatabaseConfigProvider[JdbcProfile] =>
+trait AuthConfigImpl extends AuthConfig with HasDatabaseConfigProvider[JdbcProfile] {
 
   import driver.api._
 
   val authLogger = Logger("auth")
 
-  val userService: UserService
+  val component: AuthComponent
 
   type Id = Long
 
@@ -36,7 +31,7 @@ trait AuthConfigImpl extends AuthConfig {
 
   override def resolveUser(id: Id)(implicit context: ExecutionContext): Future[Option[User]] = {
     authLogger.info(s"resolveUser: $id")
-    db.run(userService.find(id))
+    db.run(component.userService.find(id))
   }
 
   override def loginSucceeded(request: RequestHeader)(implicit context: ExecutionContext): Future[Result] = {
@@ -69,7 +64,7 @@ trait AuthConfigImpl extends AuthConfig {
   override lazy val tokenAccessor = new CookieTokenAccessor(
     // TODO configuration file
     cookieName = "SESS_ID",
-    cookieSecureOption = play.api.Play.isProd(play.api.Play.current),
+    cookieSecureOption = component.env.mode == Mode.Prod,
     cookieMaxAge = Some(sessionTimeoutInSeconds)
   )
 

@@ -18,7 +18,7 @@ import play.api.mvc._
 import slick.dbio.DBIO
 import slick.driver.JdbcProfile
 
-import auth.AuthConfigImpl
+import auth.{ AuthComponent, AuthConfigImpl }
 import models._
 import services.UserService
 
@@ -27,11 +27,12 @@ case class AuthData(username: String, password: String)
 class AuthController @Inject() (
   val dbConfigProvider: DatabaseConfigProvider,
   val messagesApi: MessagesApi,
-  val userService: UserService
+  val userService: UserService,
+  val component: AuthComponent
 )(
   implicit
   val ec: ExecutionContext
-) extends Controller with AuthElement with LoginLogout with AuthConfigImpl with HasDatabaseConfigProvider[JdbcProfile] with I18nSupport {
+) extends Controller with AuthElement with LoginLogout with AuthConfigImpl with I18nSupport {
 
   val logger = Logger(this.getClass)
 

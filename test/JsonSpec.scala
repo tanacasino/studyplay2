@@ -21,11 +21,6 @@ class JsonSpec extends PlaySpec {
       val mapper = new ObjectMapper().registerModule(PlayJsonModule)
       val json = mapper.readValue(jsonString, classOf[JsValue])
       json.isInstanceOf[JsValue] mustBe true
-
-      // チルダ特殊扱いなのか・・・Tupleがネスト深くならないという技が
-      case class ~[A, B](_1: A, _2: B)
-      val x: String ~ Int = new ~("", 10)
-
     }
 
     val jsValue = Json.parse(jsonString)
@@ -175,7 +170,7 @@ class JsonSpec extends PlaySpec {
 
       val applicativeJsResult: Applicative[JsResult] = JsResult.applicativeJsResult
       val applicativeReads: Applicative[Reads] = Reads.applicative(applicativeJsResult)
-      val functionalCanBuildReads: FunctionalCanBuild[Reads] = syntax.functionalCanBuildApplicative(applicativeReads)
+      val functionalCanBuildReads: FunctionalCanBuild[Reads] = FunctionalCanBuild.functionalCanBuildApplicative(applicativeReads)
       val ops: FunctionalBuilderOps[Reads, String] = syntax.toFunctionalBuilderOps(nameReads)(functionalCanBuildReads)
       val personBuilder: FunctionalBuilder[Reads]#CanBuild2[String, Int] = ops.and(ageReads)
       val personReadsMySelf: Reads[Person] = personBuilder.apply(Person.apply _)

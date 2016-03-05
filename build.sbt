@@ -31,8 +31,8 @@ val appDependencies = Seq(
   ws,
 
   // Play Thirdparty libs
-  "com.typesafe.play"             %% "play-slick"                          % "1.1.1",
-  "com.typesafe.play"             %% "play-slick-evolutions"               % "1.1.1",
+  "com.typesafe.play"             %% "play-slick"                          % "2.0.0",
+  "com.typesafe.play"             %% "play-slick-evolutions"               % "2.0.0",
   "jp.t2v"                        %% "play2-auth"                          % "0.14.1",
   "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
 
@@ -86,7 +86,7 @@ val customPromptTheme = PromptTheme(
 )
 
 
-import play.PlayImport.PlayKeys._
+import play.sbt.PlayImport.PlayKeys._
 
 // Main
 lazy val root = Project(

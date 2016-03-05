@@ -12,18 +12,18 @@ import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.dbio.DBIO
 import slick.driver.JdbcProfile
 
-import auth.AuthConfigImpl
+import auth.{ AuthComponent, AuthConfigImpl }
 import models._
 import services._
 
 class TaskController @Inject() (
   val dbConfigProvider: DatabaseConfigProvider,
-  val userService: UserService,
+  val component: AuthComponent,
   val taskService: TaskService
 )(
   implicit
   val ec: ExecutionContext
-) extends Controller with HasDatabaseConfigProvider[JdbcProfile] with AuthElement with AuthConfigImpl {
+) extends Controller with AuthElement with AuthConfigImpl {
 
   def updateTask(taskId: Long) = AsyncStack(AuthorityKey -> Normal) { implicit req =>
     val user = loggedIn
