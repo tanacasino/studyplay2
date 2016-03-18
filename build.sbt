@@ -5,7 +5,7 @@ val appName = "studyplay2"
 val appVersion = "1.0.0"
 
 val baseSettings = Seq(
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
