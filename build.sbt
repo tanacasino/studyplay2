@@ -109,8 +109,10 @@ lazy val root = Project(
   rpmVendor := "tanacasino.github.com",
   rpmUrl := Some("https://github.com/tanacasino/studyplay2"),
   rpmLicense := Some("Apache 2 License")
+).settings(
+  maintainer in Docker := "Tomofumi Tanaka <tanacasino@gmail.com>",
+  dockerExposedPorts in Docker := Seq(9000)
 )
-
 
 
 

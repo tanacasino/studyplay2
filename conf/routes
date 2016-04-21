@@ -20,3 +20,8 @@ GET     /profile                    @controllers.AuthController.profile
 
 GET     /admin                      @controllers.AdminController.index
 
+# NOTE 独自で認証作ってみる場合
+POST    /custom/auth                @controllers.custom.AuthController.auth
+GET     /custom/userAction          @controllers.custom.AuthController.userAction
+
+

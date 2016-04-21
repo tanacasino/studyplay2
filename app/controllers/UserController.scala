@@ -22,7 +22,7 @@ class UserController @Inject() (
 
   val r = new Random
 
-  def list = play.api.mvc.Action.async {
+  def list = Action.async {
     val action: DBIO[Result] = userService.list map { users =>
       Ok(Json.toJson(users))
     }
