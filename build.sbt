@@ -21,8 +21,7 @@ val baseSettings = Seq(
     "-encoding", "UTF-8",
     "-source", "1.8",
     "-target", "1.8"
-  ),
-  resolvers ++= Seq(Opts.resolver.sonatypeReleases)
+  )
 )
 
 val appDependencies = Seq(
@@ -31,9 +30,9 @@ val appDependencies = Seq(
   ws,
 
   // Play Thirdparty libs
-  "com.typesafe.play"             %% "play-slick"                          % "2.0.0",
-  "com.typesafe.play"             %% "play-slick-evolutions"               % "2.0.0",
-  "jp.t2v"                        %% "play2-auth"                          % "0.14.1",
+  "com.typesafe.play"             %% "play-slick"                          % "2.0.2",
+  "com.typesafe.play"             %% "play-slick-evolutions"               % "2.0.2",
+  "jp.t2v"                        %% "play2-auth"                          % "0.14.2",
   "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
 
   // Others
@@ -45,10 +44,10 @@ val appDependencies = Seq(
 
 
   // Test
-  "org.scalatest"                 %% "scalatest"                           % "2.2.4"                 % "test",
-  "org.scalatestplus"             %% "play"                                % "1.4.0-M3"              % "test",
+  "org.scalatestplus.play"        %% "scalatestplus-play"                  % "1.5.0"                 % "test",
+
   "org.codelibs"                   % "elasticsearch-cluster-runner"        % "1.5.0.1"               % "test",
-  "jp.t2v"                        %% "play2-auth-test"                     % "0.14.1"                % "test"
+  "jp.t2v"                        %% "play2-auth-test"                     % "0.14.2"                % "test"
 )
 
 
