@@ -25,3 +25,9 @@ POST    /custom/auth                @controllers.custom.AuthController.auth
 GET     /custom/userAction          @controllers.custom.AuthController.userAction
 
 
+GET     /sample/hello.txt           @controllers.SampleController.helloText
+GET     /sample/hello2.txt          @controllers.SampleController.helloText2
+GET     /sample/hello3.txt          @controllers.SampleController.helloText3
+GET     /sample/hello.xml           @controllers.SampleController.helloXml
+GET     /sample/hello.json          @controllers.SampleController.helloJson
+
