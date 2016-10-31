@@ -1,13 +1,13 @@
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.8")
+// Playframework
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.9")
 
 // Scalariform
-resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+resolvers += Resolver.typesafeRepo("releases")
 
 addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.6.0")
 
 // Rich Prompt
-addSbtPlugin("com.scalapenos" % "sbt-prompt" % "0.2.1")
-
+addSbtPlugin("com.scalapenos" % "sbt-prompt" % "1.0.0")
 
 // For Slick Codegen
 libraryDependencies ++= Seq(
