@@ -1,5 +1,5 @@
 // Playframework
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.10")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.16")
 
 // Scalariform
 resolvers += Resolver.typesafeRepo("releases")
@@ -7,7 +7,7 @@ resolvers += Resolver.typesafeRepo("releases")
 addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.6.0")
 
 // Rich Prompt
-addSbtPlugin("com.scalapenos" % "sbt-prompt" % "1.0.0")
+addSbtPlugin("com.scalapenos" % "sbt-prompt" % "1.0.2")
 
 // For Slick Codegen
 libraryDependencies ++= Seq(
